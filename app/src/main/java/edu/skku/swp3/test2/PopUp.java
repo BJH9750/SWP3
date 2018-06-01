@@ -23,15 +23,15 @@ public class PopUp extends Activity implements View.OnClickListener{
     }
 
     private void setPopup(){
-        mConfirm = findViewById(R.id.btnConfirm);
-        mCancel = findViewById(R.id.btnCancel);
+        mConfirm = (Button) findViewById(R.id.btnConfirm);
+        mCancel = (Button) findViewById(R.id.btnCancel);
 
         mConfirm.setOnClickListener(this);
         mCancel.setOnClickListener(this);
 
-        eId = findViewById(R.id.first);
-        eName = findViewById(R.id.second);
-        eContents = findViewById(R.id.third);
+        eId = (EditText) findViewById(R.id.first);
+        eName = (EditText) findViewById(R.id.second);
+        eContents = (EditText) findViewById(R.id.third);
     }
 
     public void onClick(View v){

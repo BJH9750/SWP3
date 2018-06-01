@@ -57,11 +57,9 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
 
             /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
             holder = new ViewHolder();
-            holder.name_tv = convertView.findViewById(R.id.tv_place) ;
-            holder.contents_prb = convertView.findViewById(R.id.prb_num);
-            holder.delete_ib = convertView.findViewById(R.id.btn_delete);
-            holder.favorite_ib = convertView.findViewById(R.id.btn_favorite);
-            holder.place_img = convertView.findViewById(R.id.place_img);
+            holder.name_tv = (TextView) convertView.findViewById(R.id.tv_place);
+            holder.contents_prb = (ProgressBar) convertView.findViewById(R.id.prb_num);
+            holder.place_img = (ImageView) convertView.findViewById(R.id.place_img);
 
             convertView.setTag(holder);
         }
@@ -80,7 +78,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         holder.contents_prb.setProgress(20/*myItem.getPeople()*/);
 
 
-        holder.favorite_ib.setOnClickListener(new View.OnClickListener() {
+        /*holder.favorite_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myItem.getOrder() == 1){
@@ -103,7 +101,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
                 Collections.sort(mItems);
                 MyAdapter.this.notifyDataSetChanged();
             }
-        });
+        });*/
         /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
 
         return convertView;
@@ -136,8 +134,6 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
     static class ViewHolder{
         public TextView name_tv;
         public ProgressBar contents_prb;
-        public ImageButton favorite_ib;
-        public ImageButton delete_ib;
         public ImageView place_img;
     }
 

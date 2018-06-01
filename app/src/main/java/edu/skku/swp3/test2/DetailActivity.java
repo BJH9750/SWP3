@@ -36,11 +36,11 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.infomation);
 
-        mTextView_num = findViewById(R.id.tv_peoplenum);
-        mTextView_rcmd = findViewById(R.id.textView2);
-        mSpinner = findViewById(R.id.spinner);
-        mProgressBar = findViewById(R.id.progressBar);
-        barChart = findViewById(R.id.graph);
+        mTextView_num = (TextView) findViewById(R.id.tv_peoplenum);
+        mTextView_rcmd = (TextView) findViewById(R.id.textView2);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        barChart = (BarChart) findViewById(R.id.graph);
 
         setBarChart();
 
@@ -76,7 +76,7 @@ public class DetailActivity extends Activity {
             labels.add(Integer.toString(i));
         }
 
-        BarData data = new BarData((IBarDataSet) labels, dataSet);
+        BarData data = new BarData(labels, dataSet);
         barChart.setData(data);
     }
 }

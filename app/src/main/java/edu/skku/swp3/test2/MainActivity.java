@@ -49,9 +49,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         /* 위젯과 멤버변수 참조 획득 */
-        mListView = findViewById(R.id.listView);
-        mButton = findViewById(R.id.button);
-        mSpinner = findViewById(R.id.spinner);
+        mListView = (ListView) findViewById(R.id.listView);
+        mButton = (Button) findViewById(R.id.button);
+        mSpinner = (Spinner) findViewById(R.id.spinner);
 
         adapters = new ArrayList<>();
         mMyAdapter_SR = new MyAdapter();
@@ -142,14 +142,14 @@ public class MainActivity extends Activity {
             mMyAdapter_SR.addItem("Engineering School Reading Room", "S003", "dd2b1dc4378c4a5eafebb3edd887e69c");
         }
         if(!(new File(sdPath,fileName[1]).exists())){
-            mMyAdapter_SR.addItem("Student Hall Cafeteria", "SR001", "19c74518c38e4a9185cf572b36080bba");
-            mMyAdapter_SR.addItem("Engineering School Cafeteria", "SR002", "0e2f4f2f18884a458fb4ce2309fda0ba");
-            mMyAdapter_SR.addItem("Dormitory Cafeteria", "SR003", "d256909615a64694856da26cc9369902");
+            mMyAdapter_RIN.addItem("Student Hall Cafeteria", "SR001", "19c74518c38e4a9185cf572b36080bba");
+            mMyAdapter_RIN.addItem("Engineering School Cafeteria", "SR002", "0e2f4f2f18884a458fb4ce2309fda0ba");
+            mMyAdapter_RIN.addItem("Dormitory Cafeteria", "SR003", "d256909615a64694856da26cc9369902");
         }
         if(!(new File(sdPath,fileName[2]).exists())){
-            mMyAdapter_SR.addItem("Bonjji Tonkatsu", "R001", "16bdb44d697d46c9a65cf3fb0f50cc9a");
-            mMyAdapter_SR.addItem("Ilmi Chicken Ribs", "R002", "c35d94f71cb348b595023f5ee7e2442c");
-            mMyAdapter_SR.addItem("Starbucks", "R003", "ee3a01af560d4f309d010aa622073151");
+            mMyAdapter_ROUT.addItem("Bonjji Tonkatsu", "R001", "16bdb44d697d46c9a65cf3fb0f50cc9a");
+            mMyAdapter_ROUT.addItem("Ilmi Chicken Ribs", "R002", "c35d94f71cb348b595023f5ee7e2442c");
+            mMyAdapter_ROUT.addItem("Starbucks", "R003", "ee3a01af560d4f309d010aa622073151");
         }
 
 
@@ -173,18 +173,6 @@ public class MainActivity extends Activity {
     }
     @Override
     public void finish() {
-        /*WriteFIle wf0 = new WriteFIle(getApplicationContext(), fileName[0]);
-        wf0.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
-        WriteFIle wf1 = new WriteFIle(getApplicationContext(), fileName[1]);
-        wf1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_RIN.mItems);
-        WriteFIle wf2 = new WriteFIle(getApplicationContext(), fileName[2]);
-        wf2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_ROUT.mItems);
-        Toast.makeText(getApplicationContext(),"Wating for Saving Place Information", Toast.LENGTH_SHORT);
-        while(true){
-            if(wf0.getStatus() == AsyncTask.Status.FINISHED &&
-               wf1.getStatus() == AsyncTask.Status.FINISHED &&
-               wf2.getStatus() == AsyncTask.Status.FINISHED ) break;
-        }*/
         saveData(adapters, fileName);
         super.finish();
     }
