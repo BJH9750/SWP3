@@ -72,10 +72,15 @@ public class MainActivity extends Activity {
 
         spin_adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, category_list);
         mSpinner.setAdapter(spin_adapter);
-        mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 mListView.setAdapter(adapters.get(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
         /* 아이템 추가 및 어댑터 등록 */

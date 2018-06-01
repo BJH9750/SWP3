@@ -41,7 +41,7 @@
 
         <ProgressBar
             android:id="@+id/prb_num"
-            style="?android:attr/progressBarStyleHorizontal"
+            style="android:attr/progressBarStyleHorizontal"
             android:layout_width="270dp"
             android:layout_height="22dp"
             android:layout_marginBottom="4dp"

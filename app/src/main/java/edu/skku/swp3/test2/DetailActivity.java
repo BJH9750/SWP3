@@ -11,6 +11,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+
+import java.util.ArrayList;
 
 
 public class DetailActivity extends Activity {
@@ -19,11 +25,11 @@ public class DetailActivity extends Activity {
     private ImageView mImageView;
     private Spinner mSpinner;
     private ProgressBar mProgressBar;
+
     private BarChart barChart;
 
-    public static String[] day= {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
-    public static String select_item = "";
+    public static String[] day= {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -44,7 +50,7 @@ public class DetailActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-
+                setBarChart();
             }
             @Override
             public void onNothingSelected(AdapterView arg0) {
@@ -54,11 +60,23 @@ public class DetailActivity extends Activity {
 
     }
 
-
-
+    // 가로축 시간 9칸
+    // 세로축 인원
+    // 참고 https://www.numetriclabz.com/android-bar-chart-using-mpandroidchart-library-tutorial/
     public void setBarChart(){
         //TODO Implement Drawing BarChart
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        for(int i =0; i < 9; i++){
+            entries.add(new BarEntry(i+10,i));
+        }
+        BarDataSet dataSet = new BarDataSet(entries,"People Number");
 
+        ArrayList<String> labels = new ArrayList<>();
+        for(int i=0; i <= 24; i+=3){
+            labels.add(Integer.toString(i));
+        }
 
+        BarData data = new BarData((IBarDataSet) labels, dataSet);
+        barChart.setData(data);
     }
 }
