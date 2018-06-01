@@ -57,7 +57,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
 
             /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
             holder = new ViewHolder();
-            holder.name_tv = (TextView) convertView.findViewById(R.id.tv_name) ;
+            holder.name_tv = convertView.findViewById(R.id.tv_place) ;
             holder.contents_prb = convertView.findViewById(R.id.prb_num);
             holder.delete_ib = convertView.findViewById(R.id.btn_delete);
             holder.favorite_ib = convertView.findViewById(R.id.btn_favorite);
@@ -77,7 +77,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
 
         /* 각 위젯에 세팅된 아이템을 뿌려준다 */
         holder.name_tv.setText(myItem.getName());
-        holder.contents_prb.setProgress(myItem.getPeople());
+        holder.contents_prb.setProgress(20/*myItem.getPeople()*/);
 
 
         holder.favorite_ib.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +91,8 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
                     myItem.updateOrder(1);
                     changeButton(holder.favorite_ib,R.drawable.star);
                 }
+                Collections.sort(mItems);
+                MyAdapter.this.notifyDataSetChanged();
             }
         });
 
@@ -98,6 +100,8 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 mItems.remove(pos);
+                Collections.sort(mItems);
+                MyAdapter.this.notifyDataSetChanged();
             }
         });
         /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */

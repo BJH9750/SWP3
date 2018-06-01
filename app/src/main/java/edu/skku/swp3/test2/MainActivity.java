@@ -53,6 +53,11 @@ public class MainActivity extends Activity {
         mButton = findViewById(R.id.button);
         mSpinner = findViewById(R.id.spinner);
 
+        adapters = new ArrayList<>();
+        mMyAdapter_SR = new MyAdapter();
+        mMyAdapter_RIN = new MyAdapter();
+        mMyAdapter_ROUT = new MyAdapter();
+
         adapters.add(mMyAdapter_SR);
         adapters.add(mMyAdapter_RIN);
         adapters.add(mMyAdapter_ROUT);
@@ -76,8 +81,8 @@ public class MainActivity extends Activity {
         /* 아이템 추가 및 어댑터 등록 */
         checkPermission();
         dataSetting();
-        WriteFIle wf = new WriteFIle(getApplicationContext(), "test.json");
-        wf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
+        //WriteFIle wf = new WriteFIle(getApplicationContext(), "test.json");
+        //wf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -119,12 +124,8 @@ public class MainActivity extends Activity {
 
         String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/test";
 
-        mMyAdapter_SR = new MyAdapter();
-        mMyAdapter_RIN = new MyAdapter();
-        mMyAdapter_ROUT = new MyAdapter();
-
         for(int i = 0; i < 3; i++){
-            ReadFile rf = new ReadFile(getApplicationContext(), fileName[i],mListView, adapters.get(i));
+            ReadFile rf = new ReadFile(getApplicationContext(), fileName[i], mListView, adapters.get(i));
             rf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         //ReadFile rf = new ReadFile(getApplicationContext(), "Study Room.json",mListView,mMyAdapter_SR);
@@ -150,10 +151,24 @@ public class MainActivity extends Activity {
         /* 리스트뷰에 어댑터 등록 */
         mListView.setAdapter(mMyAdapter_SR);
     }
-
+    public void saveData(ArrayList<MyAdapter> adaps, String[] names){
+        ArrayList<WriteFIle> wfs = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            WriteFIle wf = new WriteFIle(getApplicationContext(), fileName[i]);
+            wf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            wfs.add(wf);
+        }
+        while(true){
+            boolean b = true;
+            for(int i = 0; i < 3; i++){
+                b &= ( wfs.get(i).getStatus() == AsyncTask.Status.FINISHED);
+            }
+            if(b) break;
+        }
+    }
     @Override
     public void finish() {
-        WriteFIle wf0 = new WriteFIle(getApplicationContext(), fileName[0]);
+        /*WriteFIle wf0 = new WriteFIle(getApplicationContext(), fileName[0]);
         wf0.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
         WriteFIle wf1 = new WriteFIle(getApplicationContext(), fileName[1]);
         wf1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_RIN.mItems);
@@ -164,7 +179,8 @@ public class MainActivity extends Activity {
             if(wf0.getStatus() == AsyncTask.Status.FINISHED &&
                wf1.getStatus() == AsyncTask.Status.FINISHED &&
                wf2.getStatus() == AsyncTask.Status.FINISHED ) break;
-        }
+        }*/
+        saveData(adapters, fileName);
         super.finish();
     }
 
