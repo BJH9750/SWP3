@@ -13,7 +13,7 @@ public final class MyItem implements Serializable, Comparable<MyItem>{
     private String serial;
     @SerializedName("Code")
     private String code;
-    private String people_num;
+    private int people_num;
     private int order = 0;
     // Serializable Object Management UID
     private static final long serialVersionUID = 123212321L;
@@ -46,11 +46,11 @@ public final class MyItem implements Serializable, Comparable<MyItem>{
         this.name = name;
     }
 
-    public String getPeople() {
+    public int getPeople() {
         return people_num;
     }
 
-    public void setPeople(String people) {
+    public void setPeople(int people) {
         this.people_num = people;
     }
 
@@ -70,8 +70,11 @@ public final class MyItem implements Serializable, Comparable<MyItem>{
         this.code = code;
     }
 
-    public void updateOrder() {
-        this.order = 1;
+    public int getOrder(){
+        return this.order;
+    }
+    public void updateOrder(int x) {
+        this.order = x;
     }
 
     @Override

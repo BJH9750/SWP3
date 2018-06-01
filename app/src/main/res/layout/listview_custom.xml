@@ -1,60 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants">
 
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:focusable="false">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@mipmap/catcat"/>
-        <LinearLayout
-            android:layout_weight="6"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/place_img"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/catcat_web"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:id="@+id/tv_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="name"/>
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="270dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/prb_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/place_img"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_weight="1"
-                android:paddingLeft="5dp"
-                android:id="@+id/tv_contents"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:text="contents" />
+        <ProgressBar
+            android:id="@+id/prb_num"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="270dp"
+            android:layout_height="22dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/place_img" />
 
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_favorite"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/star_empty"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_place"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/bookmark"
-            android:text="☆"/>
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/prb_num" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/delete"
-            android:text="x"/>
-
-
-    </LinearLayout>
-
-</LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

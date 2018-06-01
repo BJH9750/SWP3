@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,6 +48,8 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         Context context = parent.getContext();
         ViewHolder holder;
 
+        final int pos = position;
+
         /* 'listview_custom' Layout을 inflate하여 convertView 참조 획득 */
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,7 +58,10 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
             /* 'listview_custom'에 정의된 위젯에 대한 참조 획득 */
             holder = new ViewHolder();
             holder.name_tv = (TextView) convertView.findViewById(R.id.tv_name) ;
-            holder.contents_tv = (TextView) convertView.findViewById(R.id.tv_contents) ;
+            holder.contents_prb = convertView.findViewById(R.id.prb_num);
+            holder.delete_ib = convertView.findViewById(R.id.btn_delete);
+            holder.favorite_ib = convertView.findViewById(R.id.btn_favorite);
+            holder.place_img = convertView.findViewById(R.id.place_img);
 
             convertView.setTag(holder);
         }
@@ -65,12 +73,23 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         //TextView tv_contents = (TextView) convertView.findViewById(R.id.tv_contents) ;
 
         /* 각 리스트에 뿌려줄 아이템을 받아오는데 mMyItem 재활용 */
-        MyItem myItem = getItem(position);
+        final MyItem myItem = getItem(position);
 
         /* 각 위젯에 세팅된 아이템을 뿌려준다 */
         holder.name_tv.setText(myItem.getName());
-        holder.contents_tv.setText(myItem.getCode());
+        holder.contents_prb.setProgress(myItem.getPeople());
 
+        holder.favorite_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myItem.getOrder() == 1){
+                    myItem.updateOrder(0);
+                }
+                else{
+                    myItem.updateOrder(1);
+                }
+            }
+        });
         /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
 
         return convertView;
@@ -98,7 +117,10 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
 
     static class ViewHolder{
         public TextView name_tv;
-        public TextView contents_tv;
+        public ProgressBar contents_prb;
+        public ImageButton favorite_ib;
+        public ImageButton delete_ib;
+        public ImageView place_img;
     }
 }
 
