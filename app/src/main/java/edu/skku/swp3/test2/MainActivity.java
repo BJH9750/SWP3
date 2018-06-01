@@ -117,16 +117,35 @@ public class MainActivity extends Activity {
 
     private void dataSetting(){
 
-        mMyAdapter_SR = new MyAdapter();
-
-        ReadFile rf = new ReadFile(getApplicationContext(), "test.json",mListView,mMyAdapter_SR);
-        rf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         String sdPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/test";
-        if(!(new File(sdPath,"test.json").exists())){
-            for (int i=0; i<10; i++) {
-                mMyAdapter_SR.addItem("Place_" + i, "Code_" + i, "Serial_" + i);
-            }
+
+        mMyAdapter_SR = new MyAdapter();
+        mMyAdapter_RIN = new MyAdapter();
+        mMyAdapter_ROUT = new MyAdapter();
+
+        for(int i = 0; i < 3; i++){
+            ReadFile rf = new ReadFile(getApplicationContext(), fileName[i],mListView, adapters.get(i));
+            rf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+        //ReadFile rf = new ReadFile(getApplicationContext(), "Study Room.json",mListView,mMyAdapter_SR);
+        //rf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        if(!(new File(sdPath,fileName[0]).exists())){
+            mMyAdapter_SR.addItem("Haedong Cafe", "S001", "059f61f1bd4148e7a5f9f4baea50dc43");
+            mMyAdapter_SR.addItem("Connection Cafe", "S002", "dc03df1db2004858a431adad852d9e7b");
+            mMyAdapter_SR.addItem("Engineering School Reading Room", "S003", "dd2b1dc4378c4a5eafebb3edd887e69c");
+        }
+        if(!(new File(sdPath,fileName[1]).exists())){
+            mMyAdapter_SR.addItem("Student Hall Cafeteria", "SR001", "19c74518c38e4a9185cf572b36080bba");
+            mMyAdapter_SR.addItem("Engineering School Cafeteria", "SR002", "0e2f4f2f18884a458fb4ce2309fda0ba");
+            mMyAdapter_SR.addItem("Dormitory Cafeteria", "SR003", "d256909615a64694856da26cc9369902");
+        }
+        if(!(new File(sdPath,fileName[2]).exists())){
+            mMyAdapter_SR.addItem("Bonjji Tonkatsu", "R001", "16bdb44d697d46c9a65cf3fb0f50cc9a");
+            mMyAdapter_SR.addItem("Ilmi Chicken Ribs", "R002", "c35d94f71cb348b595023f5ee7e2442c");
+            mMyAdapter_SR.addItem("Starbucks", "R003", "ee3a01af560d4f309d010aa622073151");
+        }
+
 
         /* 리스트뷰에 어댑터 등록 */
         mListView.setAdapter(mMyAdapter_SR);
@@ -134,8 +153,18 @@ public class MainActivity extends Activity {
 
     @Override
     public void finish() {
-        WriteFIle wf = new WriteFIle(getApplicationContext(), "test.json");
-        wf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
+        WriteFIle wf0 = new WriteFIle(getApplicationContext(), fileName[0]);
+        wf0.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_SR.mItems);
+        WriteFIle wf1 = new WriteFIle(getApplicationContext(), fileName[1]);
+        wf1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_RIN.mItems);
+        WriteFIle wf2 = new WriteFIle(getApplicationContext(), fileName[2]);
+        wf2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, mMyAdapter_ROUT.mItems);
+        Toast.makeText(getApplicationContext(),"Wating for Saving Place Information", Toast.LENGTH_SHORT);
+        while(true){
+            if(wf0.getStatus() == AsyncTask.Status.FINISHED &&
+               wf1.getStatus() == AsyncTask.Status.FINISHED &&
+               wf2.getStatus() == AsyncTask.Status.FINISHED ) break;
+        }
         super.finish();
     }
 

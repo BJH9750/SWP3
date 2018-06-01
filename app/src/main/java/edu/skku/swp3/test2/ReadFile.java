@@ -15,7 +15,6 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ReadFile extends AsyncTask<Void, Void, Void> {
 
@@ -38,30 +37,31 @@ public class ReadFile extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        ArrayList<String> names = new ArrayList<>();
         JsonParser parser = new JsonParser();
         Gson gson = new Gson();
 
-        try {
-            JsonElement element = parser.parse(new FileReader(mFile));
-            Log.d("FILE", gson.toJson(element));
-            if (!element.isJsonNull()){
-                JsonArray array = element.getAsJsonObject().getAsJsonArray("Place_Name");
-                for(int i = 0; i < array.size(); i++){
-                    String str = array.get(i).getAsString();
-                    JsonObject object = element.getAsJsonObject().getAsJsonObject(str);
+        if(mFile.exists()){
+            try {
+                JsonElement element = parser.parse(new FileReader(mFile));
+                Log.d("FILE", gson.toJson(element));
+                if (!element.isJsonNull()){
+                    JsonArray array = element.getAsJsonObject().getAsJsonArray("Place_Name");
+                    for(int i = 0; i < array.size(); i++){
+                        String str = array.get(i).getAsString();
+                        JsonObject object = element.getAsJsonObject().getAsJsonObject(str);
 
-                    MyItem oneItem = gson.fromJson(object, MyItem.class);
-                    Log.d("ITEM", oneItem.getSerial()+" "+oneItem.getName()+" "+oneItem.getCode());
-                    mMyAdapter.addItem(oneItem);
+                        MyItem oneItem = gson.fromJson(object, MyItem.class);
+                        Log.d("ITEM", oneItem.getSerial()+" "+oneItem.getName()+" "+oneItem.getCode());
+                        mMyAdapter.addItem(oneItem);
+                    }
                 }
-            }
-            else{
-                Log.d("Json Read", "element null");
-            }
+                else{
+                    Log.d("Json Read", "element null");
+                }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -69,6 +69,6 @@ public class ReadFile extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void voids) {
         super.onPostExecute(voids);
-        mListView.setAdapter(mMyAdapter);
+        //mListView.setAdapter(mMyAdapter);
     }
 }

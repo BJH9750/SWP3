@@ -46,7 +46,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Context context = parent.getContext();
-        ViewHolder holder;
+        final ViewHolder holder;
 
         final int pos = position;
 
@@ -79,15 +79,25 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         holder.name_tv.setText(myItem.getName());
         holder.contents_prb.setProgress(myItem.getPeople());
 
+
         holder.favorite_ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myItem.getOrder() == 1){
                     myItem.updateOrder(0);
+                    changeButton(holder.favorite_ib,R.drawable.star_empty);
                 }
                 else{
                     myItem.updateOrder(1);
+                    changeButton(holder.favorite_ib,R.drawable.star);
                 }
+            }
+        });
+
+        holder.delete_ib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mItems.remove(pos);
             }
         });
         /* (위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..)  */
@@ -115,6 +125,10 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         Collections.sort(mItems);
     }
 
+    public void changeButton(ImageButton bnt, int resId){
+        bnt.setImageResource(resId);
+    }
+
     static class ViewHolder{
         public TextView name_tv;
         public ProgressBar contents_prb;
@@ -122,5 +136,7 @@ public class MyAdapter extends BaseAdapter implements View.OnClickListener{
         public ImageButton delete_ib;
         public ImageView place_img;
     }
+
+
 }
 
