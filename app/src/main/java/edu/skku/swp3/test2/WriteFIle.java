@@ -59,8 +59,13 @@ public class WriteFIle extends AsyncTask<ArrayList<MyItem>, Void, Void> {
         pw.print(gson.toJson(jsonObject));
         pw.flush();
         pw.close();
-        //Log.d("JSON String", gson.toJson(jsonObject));
+        pw = null;
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
 }
 

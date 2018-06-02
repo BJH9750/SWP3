@@ -64,8 +64,8 @@ public class DetailActivity extends Activity {
 
     // 가로축 시간 9칸
     // 세로축 인원
-    // 참고 https://github.com/PhilJay/MPAndroidChart/wiki/Setting-Data
-    public void setBarChart(){
+    // 참고 https://github.com/PhilJay/MPAndroidChart/wiki/
+    public void setBarChart(/**/){
         //TODO Implement Drawing BarChart
         ArrayList<BarEntry> entries = new ArrayList<>();
         final String[] days = {"0","3","6","9","12","15","18","21","24"};
@@ -85,7 +85,11 @@ public class DetailActivity extends Activity {
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setValueFormatter(fomatter);
+        xAxis.setDrawLabels(true);
+        xAxis.setAxisLineWidth(1f);
+        barChart.getDescription().setEnabled(false);
         barChart.setData(data);
+        barChart.setClickable(false);
         barChart.invalidate();
     }
 }
