@@ -11,10 +11,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 import java.util.ArrayList;
 
@@ -38,13 +40,13 @@ public class DetailActivity extends Activity {
 
         mTextView_num = (TextView) findViewById(R.id.tv_peoplenum);
         mTextView_rcmd = (TextView) findViewById(R.id.textView2);
-        mSpinner = (Spinner) findViewById(R.id.spinner);
+        mSpinner = (Spinner) findViewById(R.id.day_spinner);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         barChart = (BarChart) findViewById(R.id.graph);
 
         setBarChart();
 
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, day);
+        ArrayAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1, day);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -62,21 +64,28 @@ public class DetailActivity extends Activity {
 
     // 가로축 시간 9칸
     // 세로축 인원
-    // 참고 https://www.numetriclabz.com/android-bar-chart-using-mpandroidchart-library-tutorial/
+    // 참고 https://github.com/PhilJay/MPAndroidChart/wiki/Setting-Data
     public void setBarChart(){
         //TODO Implement Drawing BarChart
         ArrayList<BarEntry> entries = new ArrayList<>();
-        for(int i =0; i < 9; i++){
-            entries.add(new BarEntry(i+10,i));
+        final String[] days = {"0","3","6","9","12","15","18","21","24"};
+
+        for(int i = 0; i < 9; i++){
+            entries.add(new BarEntry(i,i+10));
         }
         BarDataSet dataSet = new BarDataSet(entries,"People Number");
 
-        ArrayList<String> labels = new ArrayList<>();
-        for(int i=0; i <= 24; i+=3){
-            labels.add(Integer.toString(i));
-        }
-
-        BarData data = new BarData(labels, dataSet);
+        IAxisValueFormatter fomatter = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return days[(int) value];
+            }
+        };
+        BarData data = new BarData(dataSet);
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setValueFormatter(fomatter);
         barChart.setData(data);
+        barChart.invalidate();
     }
 }
